@@ -19,7 +19,9 @@ export default async function DashboardPage() {
     .select("*")
     .eq("id", user.id)
     .single();
-
+if (profile?.role === "admin") {
+  redirect("/admin");
+}
   const { data: enrollments } = await supabase
     .from("enrollments")
     .select("*, course:courses(*)")
