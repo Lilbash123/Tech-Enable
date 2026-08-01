@@ -62,7 +62,10 @@ export default function RevenueChart({ data }: { data: MonthlyRevenuePoint[] }) 
                 tickFormatter={(v) => `₦${(v / 1000).toFixed(0)}k`}
               />
               <Tooltip
-                formatter={(value: number) => [formatNaira(value * 100), "Revenue"]}
+                formatter={(value) => [
+  formatNaira(Number(value ?? 0) * 100),
+  "Revenue",
+]}
                 contentStyle={{ borderRadius: 12, border: "1px solid #E5E7EB", fontSize: "0.85rem" }}
               />
               <Area type="monotone" dataKey="revenueNaira" stroke="#0A66FF" strokeWidth={2.5} fill="url(#revenueFill)" />
