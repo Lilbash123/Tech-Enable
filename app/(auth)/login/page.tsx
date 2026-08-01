@@ -1,16 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import AuthLayout from "@/components/AuthLayout";
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
@@ -56,6 +57,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+
         <div>
           <div className="flex items-center justify-between">
             <label className="label-field" htmlFor="password">Password</label>
@@ -63,6 +65,7 @@ export default function LoginPage() {
               Forgot password?
             </Link>
           </div>
+
           <input
             id="password"
             type="password"
@@ -90,5 +93,13 @@ export default function LoginPage() {
         </Link>
       </p>
     </AuthLayout>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }
