@@ -9,7 +9,7 @@ export default async function AdminStudentsPage() {
   const { data: profiles } = await supabase
     .from("profiles")
     .select("id, full_name, email, created_at")
-    .eq("role", "student")
+    .neq("role", "admin")
     .order("created_at", { ascending: false });
 
   const { data: enrollments } = await supabase
