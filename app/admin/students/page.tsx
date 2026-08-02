@@ -1,15 +1,15 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import StudentTable, { type StudentRow } from "@/components/admin/StudentTable";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminStudentsPage() {
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
   const { data: profiles } = await supabase
     .from("profiles")
     .select("id, full_name, email, created_at")
-    .neq("role", "admin")
+    .eq("role", "student")
     .order("created_at", { ascending: false });
 
   const { data: enrollments } = await supabase
